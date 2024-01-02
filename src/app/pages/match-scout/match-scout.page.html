@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Match Scout</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="!isConnected" (click)="connect()"> Connect </ion-button>
+      <ion-button *ngIf="isConnected" (click)="disconnect()"> Disconnect </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding" style="background-color: gray">
+  <ion-list class="example-list">
+    <ng-container #container style="width: 100%; padding: 5px"></ng-container>
+  </ion-list>
+</ion-content>

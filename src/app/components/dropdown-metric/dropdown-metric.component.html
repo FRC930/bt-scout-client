@@ -1,0 +1,80 @@
+<div style="width: 100%; padding-right: 3%" (click)="containerClick()">
+  <ion-select *ngIf="!inBuilder" placeholder="Select One" [(ngModel)]="selectedOption" (ionChange)="selectOption(selectedOption)">
+    <div slot="label" class="dropdown-label">{{ params.buttonText }}</div>
+    <ion-select-option *ngFor="let option of params.options" [value]="option">
+      {{ option }}
+    </ion-select-option>
+  </ion-select>
+  <ion-grid *ngIf="inBuilder">
+    <ion-row>
+      <ion-col size="6" style="align-self: center">
+        <ion-label class="dropdown-label" (click)="containerClick()">{{ params.buttonText }}</ion-label>
+      </ion-col>
+      <ion-col size="6">
+        <ion-select disabled="true" placeholder="Select One" justify="end" [(ngModel)]="selectedOption" (ionChange)="selectOption(selectedOption)">
+          <ion-select-option *ngFor="let option of params.options" [value]="option">
+            {{ option }}
+          </ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+<ion-modal #modal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Edit Dropdown Params</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list [inset]="true">
+        <ion-item>
+          <ion-input label="Dropdown Label" labelPlacement="stacked" type="text" placeholder="Dropdown Label" [(ngModel)]="params.buttonText"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list [inset]="true">
+        <ion-item-sliding *ngFor="let option of params.options; let i = index">
+          <ion-item [button]="true" (click)="editOption(i)">
+            {{ option }}
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="danger" (click)="deleteOption(i)">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+        <ion-item>
+          <ion-button fill="outline" (click)="addOption()">Add Option</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+<ion-modal #editOptionModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancelEditOption()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Edit Option</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirmEditOption()" [strong]="true">Confirm</ion-button>
+          <ion-button (click)="deleteOption()" color="danger">Delete</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input label="Option Value" labelPlacement="stacked" type="text" placeholder="Option Value" [(ngModel)]="editOptionValue"></ion-input>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>
